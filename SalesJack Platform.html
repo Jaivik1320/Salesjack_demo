@@ -1,0 +1,1194 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SalesJack Platform</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* ===== TOKENS — dark-first, building-materials warmth ===== */
+:root {
+  --bg:    #07090f;
+  --bg2:   #0e1118;
+  --bg3:   #161b27;
+  --bg4:   #1d2435;
+  --fg:    #e9ecf4;
+  --fg2:   #9aa3b4;
+  --fg3:   #4b5568;
+  --accent:  #f97316;       /* SalesJack orange */
+  --accent2: #ea6a0a;
+  --accent-s: rgba(249,115,22,.12);
+  --blue:    #3b82f6;
+  --blue-s:  rgba(59,130,246,.12);
+  --green:   #22c55e;
+  --green-s: rgba(34,197,94,.11);
+  --red:     #ef4444;
+  --red-s:   rgba(239,68,68,.1);
+  --amber:   #f59e0b;
+  --amber-s: rgba(245,158,11,.12);
+  --violet:  #8b5cf6;
+  --violet-s:rgba(139,92,246,.11);
+  --teal:    #14b8a6;
+  --teal-s:  rgba(20,184,166,.11);
+  --border:  rgba(255,255,255,.07);
+  --shadow:  0 1px 3px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04);
+  --shadow-lg: 0 6px 28px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f5f2; --bg2: #ffffff; --bg3: #f0ede8; --bg4: #e8e4de;
+    --fg: #1a1a1a; --fg2: #5a5a5a; --fg3: #9a9a9a;
+    --border: rgba(0,0,0,.09);
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.04);
+    --shadow-lg: 0 6px 28px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.05);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f5f5f2; --bg2: #ffffff; --bg3: #f0ede8; --bg4: #e8e4de;
+  --fg: #1a1a1a; --fg2: #5a5a5a; --fg3: #9a9a9a;
+  --border: rgba(0,0,0,.09);
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.04);
+  --shadow-lg: 0 6px 28px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.05);
+  color-scheme: light;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; }
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg); color:var(--fg);
+  display:flex; flex-direction:column; height:100%; overflow:hidden;
+}
+
+/* ===== SHELL ===== */
+.shell{ display:flex; flex-direction:column; height:100%; min-height:0; }
+
+/* ===== TOPBAR ===== */
+.topbar{
+  display:flex; align-items:center; gap:12px;
+  padding:0 20px; height:52px;
+  background:var(--bg2); border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.logo{ display:flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-size:17px; font-weight:700; letter-spacing:-.3px; }
+.logo-mark{
+  width:30px; height:30px; border-radius:7px;
+  background:linear-gradient(135deg,#f97316,#ea580c);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:15px; font-weight:800;
+  box-shadow:0 0 14px rgba(249,115,22,.35);
+}
+.logo-sub{ font-size:11px; font-weight:500; color:var(--fg3); letter-spacing:.05em; }
+.topbar-spacer{ flex:1; }
+.topbar-status{ display:flex; align-items:center; gap:6px; font-size:12px; color:var(--green); font-weight:500; }
+.dot-live{ width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 2s ease infinite; }
+@keyframes pulse{ 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+.topbar-clock{ font-size:12px; color:var(--fg3); font-family:'JetBrains Mono',monospace; }
+
+/* ===== NAV ===== */
+.nav{
+  display:flex; align-items:center; gap:2px;
+  padding:0 16px;
+  background:var(--bg2); border-bottom:1px solid var(--border);
+  flex-shrink:0; overflow-x:auto;
+}
+.nav::-webkit-scrollbar{ display:none; }
+.nav-btn{
+  display:flex; align-items:center; gap:6px;
+  padding:10px 14px; font-size:13px; font-weight:500;
+  color:var(--fg2); background:none; border:none;
+  border-bottom:2px solid transparent; cursor:pointer;
+  white-space:nowrap; transition:color .15s, border-color .15s;
+}
+.nav-btn:hover{ color:var(--fg); }
+.nav-btn.active{ color:var(--accent); border-bottom-color:var(--accent); font-weight:600; }
+.nav-badge{
+  font-size:10px; font-weight:700; background:var(--red);
+  color:#fff; border-radius:10px; padding:1px 5px;
+  min-width:16px; text-align:center;
+}
+
+/* ===== CONTENT ===== */
+.content{
+  flex:1; min-height:0; overflow-y:auto; padding:20px;
+  padding-left:max(20px,env(safe-area-inset-left,0px));
+  padding-right:max(20px,env(safe-area-inset-right,0px));
+}
+
+/* ===== PANELS ===== */
+.panel{ display:none; }
+.panel.active{ display:block; }
+
+/* ===== GRIDS ===== */
+.g2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.g3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+.g4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+@media(max-width:900px){ .g4{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:1fr 1fr} }
+@media(max-width:600px){ .g4,.g3,.g2{grid-template-columns:1fr} }
+
+/* ===== CARD ===== */
+.card{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:10px; padding:18px; box-shadow:var(--shadow);
+}
+.card-hd{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.card-title{ font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600; display:flex; align-items:center; gap:7px; }
+
+/* ===== STAT TILES ===== */
+.stat{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:10px; padding:16px 18px; box-shadow:var(--shadow);
+}
+.stat-lbl{ font-size:11px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--fg3); margin-bottom:7px; }
+.stat-val{ font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; letter-spacing:-1px; font-variant-numeric:tabular-nums; line-height:1; }
+.stat-sub{ font-size:12px; color:var(--fg2); margin-top:5px; display:flex; align-items:center; gap:4px; }
+.up{ color:var(--green); }
+.dn{ color:var(--red); }
+
+/* ===== BADGES ===== */
+.bdg{ display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; border-radius:5px; padding:2px 8px; }
+.bdg-orange{ background:var(--accent-s); color:var(--accent); }
+.bdg-green{ background:var(--green-s); color:var(--green); }
+.bdg-amber{ background:var(--amber-s); color:var(--amber); }
+.bdg-red{ background:var(--red-s); color:var(--red); }
+.bdg-blue{ background:var(--blue-s); color:var(--blue); }
+.bdg-violet{ background:var(--violet-s); color:var(--violet); }
+.bdg-teal{ background:var(--teal-s); color:var(--teal); }
+
+/* ===== BUTTONS ===== */
+.btn{ display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:7px; font-size:13px; font-weight:600; border:none; cursor:pointer; transition:opacity .12s, transform .08s; }
+.btn:active{ transform:scale(.97); }
+.btn-primary{ background:var(--accent); color:#fff; }
+.btn-primary:hover{ opacity:.88; }
+.btn-ghost{ background:var(--bg3); color:var(--fg2); border:1px solid var(--border); }
+.btn-ghost:hover{ color:var(--fg); }
+.btn-blue{ background:var(--blue); color:#fff; }
+.btn-blue:hover{ opacity:.88; }
+.btn-sm{ padding:5px 12px; font-size:12px; }
+.btn-xs{ padding:3px 8px; font-size:11px; border-radius:5px; }
+
+/* ===== SECTION TITLE ===== */
+.sec-title{ font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.mb16{ margin-bottom:16px; }
+.mb20{ margin-bottom:20px; }
+
+/* ===== TABLE-LIKE ROWS ===== */
+.row-item{
+  display:flex; align-items:center; gap:12px;
+  padding:11px 14px;
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:9px; cursor:pointer;
+  transition:background .12s, box-shadow .12s;
+}
+.row-item:hover{ background:var(--bg3); box-shadow:var(--shadow); }
+.av{ width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; flex-shrink:0; }
+.av-o{ background:var(--accent-s); color:var(--accent); }
+.av-b{ background:var(--blue-s); color:var(--blue); }
+.av-g{ background:var(--green-s); color:var(--green); }
+.av-v{ background:var(--violet-s); color:var(--violet); }
+.av-t{ background:var(--teal-s); color:var(--teal); }
+.av-a{ background:var(--amber-s); color:var(--amber); }
+.ri-name{ font-size:13px; font-weight:600; }
+.ri-sub{ font-size:11px; color:var(--fg3); margin-top:1px; }
+.ri-info{ flex:1; min-width:0; }
+.ri-right{ display:flex; align-items:center; gap:7px; flex-shrink:0; }
+
+/* ===== PROGRESS ===== */
+.pbar{ height:5px; background:var(--bg3); border-radius:3px; overflow:hidden; margin-top:6px; }
+.pfill{ height:100%; border-radius:3px; transition:width .6s cubic-bezier(.4,0,.2,1); }
+.p-orange{ background:var(--accent); }
+.p-blue{ background:var(--blue); }
+.p-green{ background:var(--green); }
+.p-amber{ background:var(--amber); }
+
+/* ===== FEED ===== */
+.feed{ display:flex; flex-direction:column; gap:0; }
+.feed-item{ display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); font-size:12px; }
+.feed-item:last-child{ border-bottom:none; }
+.fdot{ width:8px; height:8px; border-radius:50%; margin-top:3px; flex-shrink:0; }
+.fo{ background:var(--accent); }
+.fb{ background:var(--blue); }
+.fg{ background:var(--green); }
+.fa{ background:var(--amber); }
+.fv{ background:var(--violet); }
+.ft{ background:var(--teal); }
+.fr{ background:var(--red); }
+.feed-txt{ color:var(--fg2); flex:1; }
+.feed-txt strong{ color:var(--fg); font-weight:600; }
+.feed-ts{ color:var(--fg3); font-family:'JetBrains Mono',monospace; font-size:10px; }
+
+/* ===== METRIC ROW ===== */
+.mrow{ display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1px solid var(--border); }
+.mrow:last-child{ border-bottom:none; }
+.mlbl{ flex:1; font-size:13px; font-weight:500; }
+.mbar{ flex:1; }
+.mval{ font-size:13px; font-family:'JetBrains Mono',monospace; font-weight:600; min-width:50px; text-align:right; }
+
+/* ===== RADAR ===== */
+.radar-box{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:12px; padding:20px; box-shadow:var(--shadow-lg);
+}
+.radar-input-row{ display:flex; gap:10px; margin-bottom:14px; }
+.radar-input{
+  flex:1; background:var(--bg3); border:1px solid var(--border);
+  border-radius:8px; padding:11px 14px; font-size:14px; color:var(--fg);
+  font-family:'Inter',sans-serif;
+}
+.radar-input::placeholder{ color:var(--fg3); }
+.radar-input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-s); }
+.radar-result{
+  background:var(--bg3); border-radius:8px; padding:16px;
+  font-size:13px; color:var(--fg2); line-height:1.7;
+  min-height:90px; border-left:3px solid var(--accent);
+}
+.radar-result strong{ color:var(--fg); }
+.chip-row{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+.chip{
+  font-size:11px; font-weight:500; padding:5px 11px;
+  border-radius:20px; border:1px solid var(--border);
+  background:var(--bg3); color:var(--fg2); cursor:pointer;
+  transition:all .15s;
+}
+.chip:hover{ border-color:var(--accent); color:var(--accent); background:var(--accent-s); }
+.typing-cursor{ display:inline-block; width:2px; height:13px; background:var(--accent); margin-left:2px; vertical-align:middle; animation:blink 1s step-end infinite; }
+@keyframes blink{ 50%{opacity:0} }
+
+/* ===== PIPELINE ===== */
+.pipeline-cols{ display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; }
+.pipe-col{ min-width:170px; flex:1; }
+.pipe-col-hd{
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--fg3); margin-bottom:10px; display:flex; align-items:center; gap:6px;
+}
+.pipe-col-cnt{ font-size:11px; font-weight:700; border-radius:10px; padding:1px 6px; }
+.pipe-card{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:12px; margin-bottom:8px;
+  box-shadow:var(--shadow); cursor:pointer;
+  transition:background .12s, box-shadow .12s;
+}
+.pipe-card:hover{ background:var(--bg3); box-shadow:var(--shadow-lg); }
+.pipe-card-name{ font-size:12px; font-weight:600; margin-bottom:4px; }
+.pipe-card-sub{ font-size:11px; color:var(--fg3); }
+.pipe-card-val{ font-size:13px; font-weight:700; color:var(--accent); margin-top:6px; font-family:'JetBrains Mono',monospace; }
+
+/* ===== CAMPAIGN ===== */
+.campaign-row{ display:flex; align-items:center; gap:10px; padding:10px 14px; background:var(--bg3); border-radius:8px; margin-bottom:8px; }
+.campaign-name{ flex:1; font-size:13px; font-weight:600; }
+.campaign-stats{ display:flex; gap:14px; font-size:12px; color:var(--fg2); }
+.campaign-stat strong{ color:var(--fg); }
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed; bottom:20px; right:20px;
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:8px; padding:12px 16px; font-size:13px;
+  box-shadow:var(--shadow-lg); z-index:999;
+  display:flex; align-items:center; gap:8px;
+  transform:translateY(80px); opacity:0;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  max-width:320px;
+}
+.toast.show{ transform:translateY(0); opacity:1; }
+
+/* ===== MODAL ===== */
+.modal-ov{
+  position:fixed; inset:0; background:rgba(0,0,0,.6);
+  z-index:100; display:flex; align-items:center;
+  justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity .2s;
+}
+.modal-ov.show{ opacity:1; pointer-events:all; }
+.modal{
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:14px; padding:24px; width:100%; max-width:480px;
+  box-shadow:var(--shadow-lg);
+  transform:translateY(16px); transition:transform .2s;
+}
+.modal-ov.show .modal{ transform:translateY(0); }
+.modal-hd{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.modal-ttl{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; }
+.modal-x{ background:none; border:none; cursor:pointer; color:var(--fg3); font-size:18px; }
+.modal-x:hover{ color:var(--fg); }
+
+/* ===== FORM ===== */
+.fg-row{ margin-bottom:12px; }
+.fg-label{ display:block; font-size:12px; font-weight:600; color:var(--fg2); margin-bottom:4px; letter-spacing:.04em; }
+.fg-input, .fg-select{
+  width:100%; background:var(--bg3); border:1px solid var(--border);
+  border-radius:7px; padding:9px 12px; font-size:13px; color:var(--fg);
+  font-family:'Inter',sans-serif;
+}
+.fg-input:focus, .fg-select:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-s); }
+.fg-select option{ background:var(--bg2); }
+
+/* ===== ERP INTEGRATION ===== */
+.erp-logo{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px; background:var(--bg3); border-radius:8px; margin-bottom:8px;
+  font-size:13px; font-weight:600;
+}
+.erp-sync{ display:flex; align-items:center; gap:6px; font-size:12px; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{ width:5px; height:5px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:var(--border); border-radius:3px; }
+
+@media(max-width:600px){ .content{ padding:14px; } .topbar{ padding:0 14px; } .nav{ padding:0 8px; } .nav-btn{ padding:10px 10px; font-size:12px; } }
+</style>
+
+<div class="shell">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-mark">SJ</div>
+      SalesJack
+      <div class="logo-sub">Building Supplier CRM</div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-status"><div class="dot-live"></div>ERP Synced</div>
+    <div class="topbar-clock" id="clock">--:--:--</div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <button class="nav-btn active" onclick="go('crm',this)">🏗 CRM</button>
+    <button class="nav-btn" onclick="go('radar',this)">📡 Radar AI</button>
+    <button class="nav-btn" onclick="go('pipeline',this)">📊 Pipeline<span class="nav-badge" id="pipe-badge">4</span></button>
+    <button class="nav-btn" onclick="go('projects',this)">📋 Projects</button>
+    <button class="nav-btn" onclick="go('marketing',this)">📣 Marketing</button>
+    <button class="nav-btn" onclick="go('integrations',this)">🔗 Integrations</button>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ===== CRM ===== -->
+    <div class="panel active" id="panel-crm">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px" class="mb20">
+        <div class="sec-title" style="margin-bottom:0">🏗 Customer Accounts</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost btn-sm" onclick="syncERP()">↺ Sync ERP</button>
+          <button class="btn btn-primary btn-sm" onclick="openAddContact()">+ Add Account</button>
+        </div>
+      </div>
+
+      <div class="g4 mb20">
+        <div class="stat">
+          <div class="stat-lbl">Total Accounts</div>
+          <div class="stat-val" id="stat-accts">284</div>
+          <div class="stat-sub"><span class="up">↑ 12</span> this month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Open Opportunities</div>
+          <div class="stat-val" id="stat-opps">47</div>
+          <div class="stat-sub">$1.2M pipeline value</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Permit Leads (new)</div>
+          <div class="stat-val" id="stat-permits">19</div>
+          <div class="stat-sub"><span class="up">AI matched 94%</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Follow-ups Due</div>
+          <div class="stat-val" style="color:var(--amber)" id="stat-fu">11</div>
+          <div class="stat-sub"><span class="dn">3 overdue</span></div>
+        </div>
+      </div>
+
+      <div class="g2 mb16">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">🏢 Accounts — Action Queue</div>
+            <span class="bdg bdg-orange">AI Prioritized</span>
+          </div>
+          <div id="crm-list" style="display:flex;flex-direction:column;gap:7px"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">⚡ Live Activity</div>
+          </div>
+          <div class="feed" id="crm-feed"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-title">📈 Wallet Share — Top Accounts</div>
+          <span class="bdg bdg-blue">ERP data</span>
+        </div>
+        <div id="wallet-share" style="display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+    </div>
+
+    <!-- ===== RADAR ===== -->
+    <div class="panel" id="panel-radar">
+      <div class="sec-title mb16">📡 Radar — Ask Your Data</div>
+      <div class="g2">
+        <div>
+          <div class="radar-box mb16">
+            <div style="font-size:12px;color:var(--fg3);margin-bottom:10px;font-weight:500">Ask anything about your customers, quotes, or opportunities</div>
+            <div class="radar-input-row">
+              <input class="radar-input" id="radar-input" placeholder="e.g. Which accounts bought less lumber this quarter?" type="text">
+              <button class="btn btn-primary btn-sm" onclick="runRadar()">Ask</button>
+            </div>
+            <div class="chip-row" id="radar-chips">
+              <div class="chip" onclick="setRadarQ('Which quotes need follow-up this week?')">Quotes needing follow-up</div>
+              <div class="chip" onclick="setRadarQ('Which accounts dropped lumber spend over 20% vs last quarter?')">Wallet share drops</div>
+              <div class="chip" onclick="setRadarQ('Show cross-sell opportunities for accounts buying drywall but not insulation')">Cross-sell gaps</div>
+              <div class="chip" onclick="setRadarQ('Which reps have the most overdue follow-ups?')">Rep performance</div>
+              <div class="chip" onclick="setRadarQ('Top 5 accounts by permit activity in last 30 days?')">Permit activity</div>
+            </div>
+            <div class="radar-result" id="radar-result">
+              <span style="color:var(--fg3)">Type a question or click a suggestion above...</span>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:10px;font-size:11px;color:var(--fg3)">
+              <span id="radar-latency"></span>
+              <span id="radar-src"></span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">🤖 AI Flags — Today</div>
+              <span class="bdg bdg-orange">8 new</span>
+            </div>
+            <div class="feed" id="radar-flags"></div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb16">
+            <div class="card-hd">
+              <div class="card-title">📊 Insight Cards</div>
+            </div>
+            <div id="insight-cards" style="display:flex;flex-direction:column;gap:10px"></div>
+          </div>
+          <div class="card">
+            <div class="card-hd">
+              <div class="card-title">📈 Query History</div>
+            </div>
+            <div class="feed" id="radar-history"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PIPELINE ===== -->
+    <div class="panel" id="panel-pipeline">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px" class="mb20">
+        <div class="sec-title" style="margin-bottom:0">📊 Sales Pipeline</div>
+        <button class="btn btn-primary btn-sm" onclick="addDeal()">+ Add Deal</button>
+      </div>
+      <div class="g4 mb20">
+        <div class="stat">
+          <div class="stat-lbl">Total Pipeline</div>
+          <div class="stat-val" style="color:var(--accent)">$1.2M</div>
+          <div class="stat-sub"><span class="up">↑ $180K</span> vs last month</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Avg Deal Size</div>
+          <div class="stat-val">$26K</div>
+          <div class="stat-sub">16 deals active</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Win Rate</div>
+          <div class="stat-val" style="color:var(--green)">38<span style="font-size:16px">%</span></div>
+          <div class="stat-sub"><span class="up">↑ 4%</span> this quarter</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Closing This Month</div>
+          <div class="stat-val">$340K</div>
+          <div class="stat-sub">4 deals forecasted</div>
+        </div>
+      </div>
+      <div class="pipeline-cols" id="pipeline-cols"></div>
+    </div>
+
+    <!-- ===== PROJECTS ===== -->
+    <div class="panel" id="panel-projects">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px" class="mb20">
+        <div class="sec-title" style="margin-bottom:0">📋 Project Management — Jobsites</div>
+        <button class="btn btn-primary btn-sm" onclick="addProject()">+ New Jobsite</button>
+      </div>
+      <div class="g2 mb16">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">🏗 Active Jobsites</div>
+            <span class="bdg bdg-blue">12 active</span>
+          </div>
+          <div id="projects-list" style="display:flex;flex-direction:column;gap:7px"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">📋 Quote Tracker</div>
+          </div>
+          <div id="quote-tracker" style="display:flex;flex-direction:column;gap:7px"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-title">👥 Team Activity</div>
+        </div>
+        <div class="feed" id="project-feed"></div>
+      </div>
+    </div>
+
+    <!-- ===== MARKETING ===== -->
+    <div class="panel" id="panel-marketing">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px" class="mb20">
+        <div class="sec-title" style="margin-bottom:0">📣 Email & Text Campaigns</div>
+        <button class="btn btn-primary btn-sm" onclick="launchCampaign()">+ New Campaign</button>
+      </div>
+      <div class="g3 mb20">
+        <div class="stat">
+          <div class="stat-lbl">Campaigns Active</div>
+          <div class="stat-val">6</div>
+          <div class="stat-sub">3 email · 3 text</div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Contacts Reached</div>
+          <div class="stat-val">1,842</div>
+          <div class="stat-sub"><span class="up">this month</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-lbl">Revenue Attributed</div>
+          <div class="stat-val" style="color:var(--green)">$84K</div>
+          <div class="stat-sub">from re-engagement</div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">📧 Active Campaigns</div>
+          </div>
+          <div id="campaigns-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">📊 Campaign Performance</div>
+          </div>
+          <canvas id="campaign-chart" height="140"></canvas>
+          <div style="margin-top:12px">
+            <div class="mrow"><div class="mlbl">Email open rate</div><div class="mval" style="color:var(--accent)">34.2%</div></div>
+            <div class="mrow"><div class="mlbl">Click-through rate</div><div class="mval" style="color:var(--blue)">8.7%</div></div>
+            <div class="mrow"><div class="mlbl">Text response rate</div><div class="mval" style="color:var(--green)">22.4%</div></div>
+            <div class="mrow"><div class="mlbl">Unsubscribe rate</div><div class="mval" style="color:var(--fg3)">0.8%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== INTEGRATIONS ===== -->
+    <div class="panel" id="panel-integrations">
+      <div class="sec-title mb16">🔗 ERP & Data Integrations</div>
+      <div class="g2 mb20">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">🏭 Connected ERP Systems</div>
+            <span class="bdg bdg-green">4 active</span>
+          </div>
+          <div id="erp-list"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">📡 Data Sources</div>
+          </div>
+          <div id="sources-list"></div>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">🔄 Sync Log</div>
+          </div>
+          <div class="feed" id="sync-feed"></div>
+        </div>
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-title">📊 Integration Health</div>
+          </div>
+          <div id="integration-health"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span id="toast-icon">✅</span><span id="toast-txt">Done</span></div>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal" onclick="closeModalOut(event)">
+  <div class="modal">
+    <div class="modal-hd">
+      <div class="modal-ttl" id="modal-title">Add Account</div>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+var ACCOUNTS = [
+  {id:'a1',name:'Rideau Valley Lumber',type:'Lumber Yard',rep:'Sarah M.',val:'$84K',score:92,wallet:72,av:'RV',cls:'av-o',flag:'Cross-sell: insulation'},
+  {id:'a2',name:'Ontario Drywall Supply',type:'Drywall Dealer',rep:'Tom K.',val:'$61K',score:88,wallet:55,av:'OD',cls:'av-b',flag:'Quote follow-up overdue'},
+  {id:'a3',name:'BuildRight Materials',type:'Full-line Dealer',rep:'Amy L.',val:'$118K',score:95,wallet:81,av:'BR',cls:'av-g',flag:'Permit match: 3 new sites'},
+  {id:'a4',name:'Pacific Window & Door',type:'Window Showroom',rep:'Dave R.',val:'$47K',score:76,wallet:43,av:'PW',cls:'av-v',flag:'Spend down 28% — alert'},
+  {id:'a5',name:'Central Millwork Co.',type:'Millwork Shop',rep:'Sarah M.',val:'$39K',score:71,wallet:61,av:'CM',cls:'av-t',flag:'Re-engagement opportunity'},
+  {id:'a6',name:'Greenfield Hardware',type:'Hardware Store',rep:'Tom K.',val:'$22K',score:68,wallet:38,av:'GH',cls:'av-a',flag:'New permit: residential project'}
+];
+
+var CRM_FEED = [
+  {c:'fo',t:'AI matched permit to BuildRight Materials',sub:'3 new residential sites',ts:'2m ago'},
+  {c:'fb',t:'Quote sent — Ontario Drywall Supply',sub:'$18K drywall package',ts:'5m ago'},
+  {c:'fg',t:'Deal closed — Rideau Valley Lumber',sub:'+$12K lumber order',ts:'11m ago'},
+  {c:'fa',t:'Follow-up alert — Pacific Window',sub:'Spend down 28%',ts:'18m ago'},
+  {c:'fv',t:'Cross-sell triggered — Central Millwork',sub:'Insulation product bundle',ts:'24m ago'},
+  {c:'ft',t:'New permit lead auto-routed',sub:'Greenfield Hardware → Dave R.',ts:'30m ago'}
+];
+
+var WALLET_DATA = [
+  {name:'BuildRight Materials',pct:81,val:'$118K',cls:'p-green'},
+  {name:'Rideau Valley Lumber',pct:72,val:'$84K',cls:'p-orange'},
+  {name:'Central Millwork Co.',pct:61,val:'$39K',cls:'p-blue'},
+  {name:'Ontario Drywall Supply',pct:55,val:'$61K',cls:'p-amber'},
+  {name:'Pacific Window & Door',pct:43,val:'$47K',cls:'p-blue'}
+];
+
+var RADAR_RESPONSES = {
+  'default': '<strong>AI Analysis:</strong> Based on your ERP and CRM data, here is a summary of the requested insight.\n\nNo specific pattern matched — try rephrasing with a product category, time range, or account name.\n\n<strong>Tip:</strong> Try asking about lumber spend drops, cross-sell gaps, or rep follow-up activity.',
+  'quotes': '<strong>Quotes Needing Follow-up — This Week:</strong>\n\n1. <strong>Ontario Drywall Supply</strong> — $18,400 drywall package · Sent 6 days ago · Rep: Tom K.\n2. <strong>Pacific Window & Door</strong> — $9,200 window order · Sent 4 days ago · Rep: Dave R.\n3. <strong>Greenfield Hardware</strong> — $3,800 fastener bulk order · Sent 3 days ago · Rep: Tom K.\n\n<strong>Recommended action:</strong> Tom K. has 2 of 3 overdue quotes — flag for manager review.\n\n<strong>Source:</strong> ERP quote log + CRM activity · Confidence: 0.96',
+  'wallet': '<strong>Wallet Share Drops — Q3 vs Q4:</strong>\n\n• <strong>Pacific Window & Door</strong> — down 28% ($47K → $34K) — last order: 42 days ago\n• <strong>Greenfield Hardware</strong> — down 14% ($22K → $19K) — buying from competitor likely\n• <strong>Spruce Valley Build</strong> — down 8% — seasonal, likely return in spring\n\n<strong>AI Recommendation:</strong> Schedule re-engagement call for Pacific Window this week. Bundle promotion on window + door hardware may recover the relationship.\n\n<strong>Source:</strong> DMSi Agility ERP sync · Confidence: 0.93',
+  'crosssell': '<strong>Cross-Sell Opportunities — Drywall → Insulation Gap:</strong>\n\n5 accounts buy drywall regularly but have never ordered insulation:\n1. <strong>BuildRight Materials</strong> — $118K drywall buyer — no insulation in 24 months\n2. <strong>Rideau Valley Lumber</strong> — $84K — insulation ordered once, 18 months ago\n3. <strong>Ontario Drywall Supply</strong> — $61K — no insulation ever\n4. <strong>Central Millwork</strong> — occasional drywall buyer — insulation bundle applicable\n5. <strong>Greenfield Hardware</strong> — small account — entry insulation pack opportunity\n\n<strong>Estimated uplift:</strong> ~$34K if all 5 converted at avg attach rate.\n\n<strong>Source:</strong> ERP order history · Confidence: 0.94',
+  'rep': '<strong>Rep Follow-up Performance:</strong>\n\n• <strong>Tom K.</strong> — 6 overdue follow-ups · Avg response: 3.2 days (target: 1 day)\n• <strong>Dave R.</strong> — 3 overdue · Avg response: 2.1 days\n• <strong>Sarah M.</strong> — 1 overdue · Avg response: 0.8 days ✅\n• <strong>Amy L.</strong> — 0 overdue · Avg response: 0.6 days ✅\n\n<strong>Coaching flag:</strong> Tom K. needs follow-up cadence review. SalesJack can auto-schedule reminders on his behalf.\n\n<strong>Source:</strong> CRM activity log · Confidence: 0.97',
+  'permit': '<strong>Top 5 Accounts by Permit Activity — Last 30 Days:</strong>\n\n1. <strong>BuildRight Materials</strong> — 14 matched permits ($2.1M construction value)\n2. <strong>Rideau Valley Lumber</strong> — 9 permits ($1.4M)\n3. <strong>Greenfield Hardware</strong> — 6 permits ($880K)\n4. <strong>Ontario Drywall Supply</strong> — 5 permits ($760K)\n5. <strong>Pacific Window & Door</strong> — 3 permits ($420K)\n\n<strong>AI Match Rate:</strong> 94% — 2 permits unmatched (new ERP accounts needed).\n\n<strong>Source:</strong> Construction Monitor · ConstructConnect · Confidence: 0.95'
+};
+
+var RADAR_FLAGS = [
+  {c:'fo',t:'Quote overdue 6 days',sub:'Ontario Drywall — $18.4K · Tom K.',ts:'today'},
+  {c:'fr',t:'Spend alert: Pacific Window',sub:'Down 28% vs last quarter',ts:'today'},
+  {c:'fg',t:'Permit matched: 3 new sites',sub:'BuildRight Materials — residential',ts:'today'},
+  {c:'fv',t:'Cross-sell gap detected',sub:'5 accounts: drywall no insulation',ts:'today'},
+  {c:'fa',t:'Re-engagement window',sub:'Central Millwork — 58 days inactive',ts:'today'},
+  {c:'fb',t:'New rep assigned',sub:'Greenfield Hardware → Dave R.',ts:'today'},
+  {c:'ft',t:'ERP data anomaly resolved',sub:'Rideau Valley order sync fixed',ts:'today'},
+  {c:'fo',t:'Tom K. follow-up backlog',sub:'6 overdue quotes — review needed',ts:'today'}
+];
+
+var PIPE_COLS = [
+  {stage:'Permit Lead',color:'var(--accent)',deals:[
+    {name:'Spruce Ridge Dev.',sub:'New residential — 24 units',val:'$42K'},
+    {name:'Lakeview Builders',sub:'Commercial framing project',val:'$78K'}
+  ]},
+  {stage:'Quote Sent',color:'var(--blue)',deals:[
+    {name:'Pacific Window & Door',sub:'Window package Q4',val:'$9.2K'},
+    {name:'Ontario Drywall',sub:'Drywall + compound',val:'$18.4K'}
+  ]},
+  {stage:'Negotiating',color:'var(--amber)',deals:[
+    {name:'BuildRight Materials',sub:'Lumber annual contract',val:'$120K'},
+    {name:'Central Millwork',sub:'Custom trim package',val:'$31K'}
+  ]},
+  {stage:'Closed Won',color:'var(--green)',deals:[
+    {name:'Rideau Valley Lumber',sub:'Q4 lumber bulk order',val:'$84K'},
+    {name:'Greenfield Hardware',sub:'Fastener supply deal',val:'$14K'}
+  ]}
+];
+
+var PROJECTS = [
+  {name:'Riverside Commons',sub:'24-unit residential · Ottawa',status:'Active',rep:'Sarah M.',cls:'av-g'},
+  {name:'Lakeview Commercial',sub:'Commercial fitout · Toronto',status:'Active',rep:'Tom K.',cls:'av-b'},
+  {name:'Mapleton Townhomes',sub:'18-unit townhouse · Guelph',status:'Follow-up',rep:'Dave R.',cls:'av-o'},
+  {name:'Central Plaza Reno',sub:'Retail renovation · Hamilton',status:'Quote sent',rep:'Amy L.',cls:'av-v'}
+];
+
+var QUOTES = [
+  {name:'Drywall Package — Riverside',val:'$18.4K',status:'Pending',age:'3d'},
+  {name:'Lumber — Lakeview Commercial',val:'$47K',status:'Accepted',age:'1d'},
+  {name:'Insulation — Mapleton',val:'$12.2K',status:'Follow-up',age:'6d'},
+  {name:'Windows — Central Plaza',val:'$9.8K',status:'Pending',age:'2d'}
+];
+
+var CAMPAIGNS = [
+  {name:'Q4 Re-engagement — Dormant Accounts',type:'Email',sent:412,opens:'38%',clicks:'9.2%',status:'Active'},
+  {name:'Insulation Cross-sell',type:'Email',sent:184,opens:'31%',clicks:'7.4%',status:'Active'},
+  {name:'Quote Follow-up Reminder',type:'Text',sent:97,opens:'—',clicks:'24.1%',status:'Active'},
+  {name:'Winter Lumber Promo',type:'Email',sent:623,opens:'29%',clicks:'6.8%',status:'Paused'},
+  {name:'New Permit Lead Alert',type:'Text',sent:58,opens:'—',clicks:'31.0%',status:'Active'},
+  {name:'BuildRight Annual Renewal',type:'Email',sent:1,opens:'100%',clicks:'100%',status:'Sent'}
+];
+
+var ERP_SYSTEMS = [
+  {name:'DMSi Agility',status:'Connected',sync:'2 min ago',icon:'🟢'},
+  {name:'Epicor BisTrack',status:'Connected',sync:'4 min ago',icon:'🟢'},
+  {name:'Oracle NetSuite',status:'Connected',sync:'8 min ago',icon:'🟢'},
+  {name:'ECI Spruce',status:'Connected',sync:'12 min ago',icon:'🟢'}
+];
+
+var DATA_SOURCES = [
+  {name:'Construction Monitor',type:'Permit data',status:'Live',icon:'📡'},
+  {name:'ConstructConnect',type:'Permit data',status:'Live',icon:'📡'},
+  {name:'Microsoft 365',type:'Email & calendar',status:'Connected',icon:'📧'},
+  {name:'MiTek',type:'Manufacturer orders',status:'Connected',icon:'🔗'},
+  {name:'Marvin Windows',type:'Manufacturer orders',status:'Connected',icon:'🔗'},
+  {name:'Andersen',type:'Manufacturer orders',status:'Connected',icon:'🔗'}
+];
+
+// ===== HELPERS =====
+function go(id, el) {
+  document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'pipeline') buildPipeline();
+  if (id === 'integrations') buildIntegrations();
+  if (id === 'marketing') setTimeout(drawCampaignChart, 80);
+}
+
+function showToast(icon, txt, col) {
+  var t = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-txt').textContent = txt;
+  t.style.borderColor = col === 'orange' ? 'var(--accent)' : col === 'green' ? 'var(--green)' : 'var(--border)';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2800);
+}
+
+function openModal(title, body) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+function closeModalOut(e) { if (e.target === document.getElementById('modal')) closeModal(); }
+
+// CLOCK
+function tick() {
+  var n = new Date();
+  var h = n.getHours().toString().padStart(2,'0');
+  var m = n.getMinutes().toString().padStart(2,'0');
+  var s = n.getSeconds().toString().padStart(2,'0');
+  document.getElementById('clock').textContent = h+':'+m+':'+s;
+}
+setInterval(tick, 1000); tick();
+
+// ===== CRM =====
+function buildCRM() {
+  var list = document.getElementById('crm-list');
+  list.innerHTML = '';
+  ACCOUNTS.forEach(function(a) {
+    var flagCls = a.flag.indexOf('alert') > -1 || a.flag.indexOf('down') > -1 ? 'bdg-red' : a.flag.indexOf('overdue') > -1 ? 'bdg-amber' : 'bdg-blue';
+    var el = document.createElement('div');
+    el.className = 'row-item';
+    el.onclick = function(){ showAccount(a); };
+    el.innerHTML = '<div class="av '+a.cls+'">'+a.av+'</div>'
+      +'<div class="ri-info"><div class="ri-name">'+a.name+'</div>'
+      +'<div class="ri-sub">'+a.type+' · '+a.rep+'</div></div>'
+      +'<div class="ri-right"><span class="bdg '+flagCls+'" style="font-size:10px">'+a.flag+'</span>'
+      +'<div style="font-size:12px;font-weight:700;color:var(--accent);font-family:\'JetBrains Mono\',monospace">'+a.val+'</div></div>';
+    list.appendChild(el);
+  });
+
+  var feed = document.getElementById('crm-feed');
+  feed.innerHTML = '';
+  CRM_FEED.forEach(function(e) {
+    var el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = '<div class="fdot '+e.c+'"></div>'
+      +'<div class="feed-txt"><strong>'+e.t+'</strong><br>'+e.sub+'</div>'
+      +'<div class="feed-ts">'+e.ts+'</div>';
+    feed.appendChild(el);
+  });
+
+  var ws = document.getElementById('wallet-share');
+  ws.innerHTML = '';
+  WALLET_DATA.forEach(function(w) {
+    var el = document.createElement('div');
+    el.innerHTML = '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">'
+      +'<span style="font-weight:500">'+w.name+'</span>'
+      +'<span style="color:var(--fg3);font-family:\'JetBrains Mono\',monospace">'+w.pct+'% · '+w.val+'</span></div>'
+      +'<div class="pbar"><div class="pfill '+w.cls+'" style="width:'+w.pct+'%"></div></div>';
+    ws.appendChild(el);
+  });
+}
+
+function showAccount(a) {
+  openModal(a.name,
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">'
+    +'<div class="av '+a.cls+'" style="width:46px;height:46px;font-size:16px">'+a.av+'</div>'
+    +'<div><div style="font-size:16px;font-weight:700">'+a.name+'</div>'
+    +'<div style="font-size:13px;color:var(--fg2)">'+a.type+' · Rep: '+a.rep+'</div></div></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">'
+    +'<div style="background:var(--bg3);border-radius:7px;padding:10px;text-align:center"><div style="font-size:11px;color:var(--fg3);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px">Annual Value</div>'
+    +'<div style="font-size:15px;font-weight:700;color:var(--accent)">'+a.val+'</div></div>'
+    +'<div style="background:var(--bg3);border-radius:7px;padding:10px;text-align:center"><div style="font-size:11px;color:var(--fg3);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px">AI Score</div>'
+    +'<div style="font-size:15px;font-weight:700;color:var(--blue)">'+a.score+'</div></div>'
+    +'<div style="background:var(--bg3);border-radius:7px;padding:10px;text-align:center"><div style="font-size:11px;color:var(--fg3);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px">Wallet Share</div>'
+    +'<div style="font-size:15px;font-weight:700;color:var(--green)">'+a.wallet+'%</div></div></div>'
+    +'<div style="background:var(--accent-s);border:1px solid var(--accent);border-radius:8px;padding:12px;margin-bottom:14px">'
+    +'<div style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">🤖 AI Flag</div>'
+    +'<div style="font-size:13px;color:var(--fg)">'+a.flag+'</div></div>'
+    +'<div style="display:flex;gap:8px">'
+    +'<button class="btn btn-primary btn-sm" onclick="logActivity(\''+a.name+'\')">Log Activity</button>'
+    +'<button class="btn btn-ghost btn-sm" onclick="closeModal()">Close</button></div>'
+  );
+}
+
+function logActivity(name) {
+  closeModal();
+  showToast('✅', 'Activity logged for '+name, 'green');
+  CRM_FEED.unshift({c:'fo',t:'Activity logged — '+name,sub:'Manual follow-up recorded',ts:'just now'});
+  buildCRM();
+}
+
+function openAddContact() {
+  openModal('Add Account',
+    '<div class="fg-row"><label class="fg-label">Company Name</label><input class="fg-input" id="new-name" placeholder="e.g. Lakeview Lumber Co."></div>'
+    +'<div class="fg-row"><label class="fg-label">Account Type</label><select class="fg-select" id="new-type"><option>Lumber Yard</option><option>Drywall Dealer</option><option>Full-line Dealer</option><option>Window Showroom</option><option>Millwork Shop</option><option>Hardware Store</option></select></div>'
+    +'<div class="fg-row"><label class="fg-label">Assign Rep</label><select class="fg-select"><option>Sarah M.</option><option>Tom K.</option><option>Amy L.</option><option>Dave R.</option></select></div>'
+    +'<div class="fg-row"><label class="fg-label">ERP Account ID</label><input class="fg-input" placeholder="e.g. DMSi-10482"></div>'
+    +'<div style="display:flex;gap:8px;margin-top:4px">'
+    +'<button class="btn btn-primary btn-sm" style="flex:1" onclick="submitNewAccount()">Add & Sync to ERP</button>'
+    +'<button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button></div>'
+  );
+}
+
+function submitNewAccount() {
+  var name = document.getElementById('new-name').value.trim() || 'New Account';
+  var type = document.getElementById('new-type').value;
+  var avs = ['av-o','av-b','av-g','av-v','av-t','av-a'];
+  ACCOUNTS.unshift({id:'an'+Date.now(),name:name,type:type,rep:'Sarah M.',val:'$0',score:70,wallet:0,av:name.substring(0,2).toUpperCase(),cls:avs[Math.floor(Math.random()*avs.length)],flag:'New account — ERP sync pending'});
+  closeModal();
+  buildCRM();
+  showToast('✅', name+' added and syncing to ERP', 'green');
+  var cnt = parseInt(document.getElementById('stat-accts').textContent)+1;
+  document.getElementById('stat-accts').textContent = cnt;
+}
+
+function syncERP() {
+  showToast('🔄', 'ERP sync triggered — DMSi Agility', 'orange');
+  setTimeout(function(){ showToast('✅', 'ERP sync complete — 284 accounts updated', 'green'); }, 2000);
+}
+
+// ===== RADAR =====
+function setRadarQ(q) { document.getElementById('radar-input').value = q; }
+
+function runRadar() {
+  var q = document.getElementById('radar-input').value.trim();
+  if (!q) { showToast('⚠️','Enter a question first'); return; }
+  var result = document.getElementById('radar-result');
+  result.innerHTML = '<span style="color:var(--fg3)">Analyzing your data</span><span class="typing-cursor"></span>';
+  document.getElementById('radar-latency').textContent = '';
+  var start = Date.now();
+  var key = 'default';
+  var ql = q.toLowerCase();
+  if (ql.indexOf('quote') > -1 || ql.indexOf('follow') > -1) key = 'quotes';
+  else if (ql.indexOf('wallet') > -1 || ql.indexOf('drop') > -1 || ql.indexOf('less') > -1) key = 'wallet';
+  else if (ql.indexOf('cross') > -1 || ql.indexOf('insulation') > -1) key = 'crosssell';
+  else if (ql.indexOf('rep') > -1 || ql.indexOf('overdue') > -1) key = 'rep';
+  else if (ql.indexOf('permit') > -1) key = 'permit';
+  var resp = RADAR_RESPONSES[key];
+  setTimeout(function(){
+    var lat = Date.now()-start;
+    var lines = resp.split('\n');
+    var idx = 0;
+    result.innerHTML = '';
+    var pre = document.createElement('div');
+    pre.style.cssText = 'white-space:pre-line;line-height:1.7';
+    result.appendChild(pre);
+    function addLine() {
+      if (idx < lines.length) {
+        pre.innerHTML += (idx > 0 ? '\n' : '') + lines[idx]; idx++;
+        setTimeout(addLine, 55);
+      } else {
+        document.getElementById('radar-latency').textContent = 'Query: '+lat+'ms';
+        document.getElementById('radar-src').textContent = '· ERP + CRM + Permit data';
+        var hist = document.getElementById('radar-history');
+        var el = document.createElement('div');
+        el.className = 'feed-item';
+        el.innerHTML = '<div class="fdot fo"></div><div class="feed-txt"><strong>'+q.substring(0,40)+(q.length>40?'…':'')+'</strong><br>'+lat+'ms · results returned</div><div class="feed-ts">now</div>';
+        hist.insertBefore(el, hist.firstChild);
+      }
+    }
+    addLine();
+  }, 700+Math.floor(Math.random()*400));
+}
+
+function buildRadarFlags() {
+  var feed = document.getElementById('radar-flags');
+  feed.innerHTML = '';
+  RADAR_FLAGS.forEach(function(e) {
+    var el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = '<div class="fdot '+e.c+'"></div>'
+      +'<div class="feed-txt"><strong>'+e.t+'</strong><br>'+e.sub+'</div>'
+      +'<div class="feed-ts">'+e.ts+'</div>';
+    feed.appendChild(el);
+  });
+}
+
+function buildInsightCards() {
+  var c = document.getElementById('insight-cards');
+  c.innerHTML = '';
+  var cards = [
+    {color:'var(--accent)',icon:'💰',title:'$47K at risk',sub:'Pacific Window spend down 28% — re-engage this week'},
+    {color:'var(--green)',icon:'🏗',title:'$2.1M in permits',sub:'BuildRight matched to 14 active jobsites'},
+    {color:'var(--blue)',icon:'📦',title:'Cross-sell: $34K upside',sub:'5 accounts buy drywall, never insulation'},
+    {color:'var(--violet)',icon:'⏰',title:'6 overdue quotes',sub:"Tom K.'s follow-up backlog needs attention"}
+  ];
+  cards.forEach(function(d) {
+    var el = document.createElement('div');
+    el.style.cssText = 'display:flex;align-items:flex-start;gap:10px;padding:12px;background:var(--bg3);border-radius:8px;cursor:pointer';
+    el.onclick = function(){ showToast('📡', d.title, 'orange'); };
+    el.innerHTML = '<div style="width:32px;height:32px;border-radius:7px;background:'+d.color+'22;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">'+d.icon+'</div>'
+      +'<div><div style="font-size:13px;font-weight:700;color:'+d.color+'">'+d.title+'</div>'
+      +'<div style="font-size:11px;color:var(--fg2);margin-top:2px">'+d.sub+'</div></div>';
+    c.appendChild(el);
+  });
+}
+
+function buildRadarHistory() {
+  var hist = document.getElementById('radar-history');
+  hist.innerHTML = '';
+  var items = [
+    {q:'Which accounts dropped spend over 20%?', ms:'410ms'},
+    {q:'Cross-sell gaps for drywall accounts', ms:'380ms'},
+    {q:'Rep follow-up performance this month', ms:'295ms'}
+  ];
+  items.forEach(function(item) {
+    var el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = '<div class="fdot fo"></div><div class="feed-txt"><strong>'+item.q+'</strong><br>'+item.ms+' · results returned</div><div class="feed-ts">earlier</div>';
+    hist.appendChild(el);
+  });
+}
+
+// ===== PIPELINE =====
+function buildPipeline() {
+  var cols = document.getElementById('pipeline-cols');
+  cols.innerHTML = '';
+  PIPE_COLS.forEach(function(col) {
+    var div = document.createElement('div');
+    div.className = 'pipe-col';
+    div.innerHTML = '<div class="pipe-col-hd" style="color:'+col.color+'">'
+      +'<span>'+col.stage+'</span>'
+      +'<span class="pipe-col-cnt" style="background:'+col.color+'22;color:'+col.color+'">'+col.deals.length+'</span></div>';
+    col.deals.forEach(function(d) {
+      var card = document.createElement('div');
+      card.className = 'pipe-card';
+      card.onclick = function(){ showToast('📊', d.name+' — '+d.val, 'orange'); };
+      card.innerHTML = '<div class="pipe-card-name">'+d.name+'</div>'
+        +'<div class="pipe-card-sub">'+d.sub+'</div>'
+        +'<div class="pipe-card-val">'+d.val+'</div>';
+      div.appendChild(card);
+    });
+    cols.appendChild(div);
+  });
+}
+
+function addDeal() {
+  PIPE_COLS[0].deals.push({name:'New Permit Lead',sub:'AI matched — assign rep',val:'TBD'});
+  buildPipeline();
+  document.getElementById('pipe-badge').textContent = PIPE_COLS[0].deals.length;
+  showToast('📡', 'New permit lead added to pipeline', 'orange');
+}
+
+// ===== PROJECTS =====
+function buildProjects() {
+  var list = document.getElementById('projects-list');
+  list.innerHTML = '';
+  PROJECTS.forEach(function(p) {
+    var sc = p.status === 'Active' ? 'bdg-green' : p.status === 'Follow-up' ? 'bdg-amber' : 'bdg-blue';
+    var el = document.createElement('div');
+    el.className = 'row-item';
+    el.onclick = function(){ showToast('🏗', p.name+' — '+p.status, 'orange'); };
+    el.innerHTML = '<div class="av '+p.cls+'">🏗</div>'
+      +'<div class="ri-info"><div class="ri-name">'+p.name+'</div><div class="ri-sub">'+p.sub+'</div></div>'
+      +'<div class="ri-right"><span class="bdg '+sc+'">'+p.status+'</span>'
+      +'<div style="font-size:11px;color:var(--fg3)">'+p.rep+'</div></div>';
+    list.appendChild(el);
+  });
+
+  var qt = document.getElementById('quote-tracker');
+  qt.innerHTML = '';
+  QUOTES.forEach(function(q) {
+    var sc = q.status === 'Accepted' ? 'bdg-green' : q.status === 'Follow-up' ? 'bdg-amber' : 'bdg-blue';
+    var el = document.createElement('div');
+    el.className = 'row-item';
+    el.style.cursor = 'default';
+    el.innerHTML = '<div class="ri-info"><div class="ri-name">'+q.name+'</div><div class="ri-sub">'+q.age+' old</div></div>'
+      +'<div class="ri-right"><span class="bdg '+sc+'">'+q.status+'</span>'
+      +'<div style="font-size:12px;font-weight:700;color:var(--accent);font-family:\'JetBrains Mono\',monospace">'+q.val+'</div></div>';
+    qt.appendChild(el);
+  });
+
+  var feed = document.getElementById('project-feed');
+  feed.innerHTML = '';
+  var items = [
+    {c:'fo',t:'Quote sent — Riverside Commons',sub:'Sarah M. · $18.4K drywall',ts:'1h ago'},
+    {c:'fg',t:'Permit matched — Lakeview',sub:'Auto-linked to CRM account',ts:'2h ago'},
+    {c:'fa',t:'Follow-up needed — Mapleton',sub:'Dave R. · quote 6 days old',ts:'3h ago'},
+    {c:'fb',t:'Estimator added — Central Plaza',sub:'Amy L. assigned',ts:'4h ago'}
+  ];
+  items.forEach(function(e) {
+    var el = document.createElement('div');
+    el.className = 'feed-item';
+    el.innerHTML = '<div class="fdot '+e.c+'"></div><div class="feed-txt"><strong>'+e.t+'</strong><br>'+e.sub+'</div><div class="feed-ts">'+e.ts+'</div>';
+    feed.appendChild(el);
+  });
+}
+
+function addProject() {
+  PROJECTS.unshift({name:'New Jobsite — TBD',sub:'Permit lead assigned',status:'Active',rep:'Sarah M.',cls:'av-o'});
+  buildProjects();
+  showToast('🏗', 'New jobsite added', 'orange');
+}
+
+// ===== MARKETING =====
+function buildMarketing() {
+  var list = document.getElementById('campaigns-list');
+  list.innerHTML = '';
+  CAMPAIGNS.forEach(function(c) {
+    var sc = c.status === 'Active' ? 'bdg-green' : c.status === 'Sent' ? 'bdg-blue' : 'bdg-amber';
+    var tc = c.type === 'Email' ? 'bdg-blue' : 'bdg-violet';
+    var el = document.createElement('div');
+    el.className = 'campaign-row';
+    el.innerHTML = '<div class="campaign-name">'+c.name+'</div>'
+      +'<span class="bdg '+tc+'">'+c.type+'</span>'
+      +'<div class="campaign-stats">'
+      +'<span>Sent: <strong>'+c.sent+'</strong></span>'
+      +(c.type === 'Email' ? '<span>Open: <strong>'+c.opens+'</strong></span>' : '')
+      +'<span>CTR: <strong>'+c.clicks+'</strong></span></div>'
+      +'<span class="bdg '+sc+'">'+c.status+'</span>';
+    list.appendChild(el);
+  });
+}
+
+function launchCampaign() {
+  CAMPAIGNS.unshift({name:'New Campaign — ERP Segment',type:'Email',sent:0,opens:'—',clicks:'—',status:'Draft'});
+  buildMarketing();
+  showToast('📣', 'New campaign created from ERP segment', 'orange');
+}
+
+function drawCampaignChart() {
+  var canvas = document.getElementById('campaign-chart');
+  if (!canvas) return;
+  var w = canvas.offsetWidth || 400;
+  canvas.width = w; canvas.height = 140;
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,w,140);
+  var months = ['Aug','Sep','Oct','Nov'];
+  var emailData = [24,28,31,34];
+  var textData = [15,18,20,22];
+  var bw = (w - 60) / months.length;
+  months.forEach(function(m, i) {
+    var x = 30 + i*bw + bw/2;
+    var eh = (emailData[i]/40)*100;
+    var th = (textData[i]/40)*100;
+    ctx.fillStyle = 'rgba(249,115,22,0.7)';
+    ctx.fillRect(x-14, 140-eh, 12, eh);
+    ctx.fillStyle = 'rgba(139,92,246,0.7)';
+    ctx.fillRect(x+2, 140-th, 12, th);
+    ctx.fillStyle = 'var(--fg3,#4b5568)';
+    ctx.font = '10px Inter,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(m, x, 135);
+    ctx.fillStyle = 'rgba(249,115,22,0.9)';
+    ctx.font = '10px JetBrains Mono,monospace';
+    ctx.fillText(emailData[i]+'%', x-8, 140-eh-4);
+  });
+}
+
+// ===== INTEGRATIONS =====
+function buildIntegrations() {
+  var el = document.getElementById('erp-list');
+  el.innerHTML = '';
+  ERP_SYSTEMS.forEach(function(e) {
+    var div = document.createElement('div');
+    div.className = 'erp-logo';
+    div.innerHTML = e.icon+' <strong>'+e.name+'</strong>'
+      +'<div class="erp-sync"><div class="dot-live"></div>'+e.sync+'</div>';
+    el.appendChild(div);
+  });
+
+  var sl = document.getElementById('sources-list');
+  sl.innerHTML = '';
+  DATA_SOURCES.forEach(function(s) {
+    var sc = s.status === 'Live' ? 'bdg-green' : 'bdg-blue';
+    var div = document.createElement('div');
+    div.className = 'erp-logo';
+    div.innerHTML = s.icon+' <strong>'+s.name+'</strong>'
+      +'<div style="display:flex;align-items:center;gap:7px"><span style="font-size:11px;color:var(--fg3)">'+s.type+'</span><span class="bdg '+sc+'">'+s.status+'</span></div>';
+    sl.appendChild(div);
+  });
+
+  var feed = document.getElementById('sync-feed');
+  feed.innerHTML = '';
+  var items = [
+    {c:'fg',t:'DMSi Agility sync complete',sub:'284 accounts · 1,842 orders imported',ts:'2m ago'},
+    {c:'fo',t:'Permit data refreshed',sub:'Construction Monitor · 47 new permits',ts:'5m ago'},
+    {c:'fb',t:'Microsoft 365 sync',sub:'412 email threads indexed',ts:'8m ago'},
+    {c:'fg',t:'BisTrack sync complete',sub:'Order history updated',ts:'12m ago'},
+    {c:'fa',t:'NetSuite anomaly resolved',sub:'Duplicate account merged',ts:'18m ago'}
+  ];
+  items.forEach(function(e) {
+    var el2 = document.createElement('div');
+    el2.className = 'feed-item';
+    el2.innerHTML = '<div class="fdot '+e.c+'"></div><div class="feed-txt"><strong>'+e.t+'</strong><br>'+e.sub+'</div><div class="feed-ts">'+e.ts+'</div>';
+    feed.appendChild(el2);
+  });
+
+  var ih = document.getElementById('integration-health');
+  ih.innerHTML = '';
+  var health = [
+    {name:'ERP Sync Latency',val:'1.4s',c:'var(--green)'},
+    {name:'Permit Match Rate',val:'94%',c:'var(--accent)'},
+    {name:'API Uptime (30d)',val:'99.96%',c:'var(--green)'},
+    {name:'Data Freshness',val:'2 min',c:'var(--blue)'},
+    {name:'Records Synced Today',val:'18,432',c:'var(--violet)'}
+  ];
+  health.forEach(function(h) {
+    var el3 = document.createElement('div');
+    el3.className = 'mrow';
+    el3.innerHTML = '<div class="mlbl">'+h.name+'</div><div class="mval" style="color:'+h.c+'">'+h.val+'</div>';
+    ih.appendChild(el3);
+  });
+}
+
+// ===== INIT =====
+buildCRM();
+buildRadarFlags();
+buildInsightCards();
+buildRadarHistory();
+buildProjects();
+buildMarketing();
+
+// LIVE FLICKER
+setInterval(function(){
+  if (Math.random() > 0.6) {
+    var feed = document.getElementById('crm-feed');
+    var events = [
+      {c:'fo',t:'Quote auto-flagged for follow-up',sub:'AI: 4 days no response',ts:'just now'},
+      {c:'fg',t:'New permit matched to account',sub:'BuildRight Materials',ts:'just now'},
+      {c:'fb',t:'ERP order imported',sub:'Rideau Valley — $6.2K',ts:'just now'},
+      {c:'fa',t:'Wallet share alert',sub:'Spruce Valley — spend drop 15%',ts:'just now'}
+    ];
+    var ev = events[Math.floor(Math.random()*events.length)];
+    CRM_FEED.unshift(ev);
+    CRM_FEED = CRM_FEED.slice(0,8);
+    var feedEl = document.getElementById('crm-feed');
+    if (feedEl) {
+      var el = document.createElement('div');
+      el.className = 'feed-item';
+      el.innerHTML = '<div class="fdot '+ev.c+'"></div><div class="feed-txt"><strong>'+ev.t+'</strong><br>'+ev.sub+'</div><div class="feed-ts">'+ev.ts+'</div>';
+      feedEl.insertBefore(el, feedEl.firstChild);
+      if (feedEl.children.length > 7) feedEl.removeChild(feedEl.lastChild);
+    }
+  }
+}, 4500);
+</script>
+
+</body></html>
